@@ -1,28 +1,13 @@
-
+@import "tailwindcss";
 /* @import url() FONT IMPORTS MUST ALWAYS BE AT THE VERY TOP OF THIS FILE, ABOVE THE TAILWIND IMPORTS — DO NOT DELETE THIS COMMENT */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-@import "tailwindcss";
 
-/* Terminal color palette as CSS variables */
-:root {
-  --term-bg: #0C0C0C;
-  --term-text: #CCCCCC;
-  --term-green: #00FF41;
-  --term-yellow: #FFFF00;
-  --term-cyan: #00FFFF;
-  --term-purple: #c678dd;
-  --term-red: #E06C75;
-  --term-blue: #61AFEF;
-  --term-gray: #5C6370;
-}
 
 /* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
 
 @layer base {
   body {
-    background: var(--term-bg);
-    color: var(--term-text);
-    @apply font-mono overflow-hidden;
+    @apply bg-[#0C0C0C] text-[#CCCCCC] font-mono overflow-hidden;
   }
 }
 @layer utilities {
@@ -44,16 +29,6 @@
     background-size: 100% 4px;
     pointer-events: none;
   }
-  /* Terminal color utility classes */
-  .text-term-green { color: var(--term-green); }
-  .text-term-yellow { color: var(--term-yellow); }
-  .text-term-cyan { color: var(--term-cyan); }
-  .text-term-purple { color: var(--term-purple); }
-  .text-term-red { color: var(--term-red); }
-  .text-term-blue { color: var(--term-blue); }
-  .text-term-gray { color: var(--term-gray); }
-  .bg-term-bg { background: var(--term-bg); }
-  .text-term-text { color: var(--term-text); }
 }
 /* Blinking cursor animation */
 @keyframes blink {
