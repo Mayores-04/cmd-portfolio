@@ -90,21 +90,26 @@ const HomePage = () => {
       )}
 
       <motion.p
-        className="text-term-green text-lg sm:text-xl font-bold"
+        className="text-term-green text-base sm:text-lg md:text-xl font-bold"
         variants={itemVariants}
       >
         Jake Mayores
       </motion.p>
-      <motion.p className="text-term-yellow mt-1" variants={itemVariants}>
+      <motion.p
+        className="text-term-yellow mt-1 text-xs sm:text-sm"
+        variants={itemVariants}
+      >
         Computer Science | Fullstack Developer
       </motion.p>
 
       <motion.div
-        className="mt-4 border border-[#2b2b2b] rounded-sm bg-black/40 p-3 sm:p-4"
+        className="mt-4 border border-[#2b2b2b] rounded-sm bg-black/40 p-2 sm:p-4"
         variants={itemVariants}
       >
-        <p className="text-term-cyan">$ neofetch --profile jake</p>
-        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-6 text-sm">
+        <p className="text-term-cyan text-xs sm:text-sm">
+          $ neofetch --profile jake
+        </p>
+        <div className="mt-2 sm:mt-3 grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-3 sm:gap-x-6 text-xs sm:text-sm">
           <p>
             <span className="text-term-blue">role:</span>{" "}
             <span className="text-term-text">Fullstack Developer</span>
@@ -144,14 +149,14 @@ const HomePage = () => {
       </motion.div>
 
       <motion.div
-        className="mt-4 border border-[#2b2b2b] rounded-sm bg-black/40 p-3 sm:p-4"
+        className="mt-4 border border-[#2b2b2b] rounded-sm bg-black/40 p-2 sm:p-4"
         variants={itemVariants}
       >
-        <p className="text-term-cyan">$ help</p>
+        <p className="text-term-cyan text-xs sm:text-sm">$ help</p>
         <p className="mt-1 text-term-gray text-xs">
-          Tip: You can use either numbers or command aliases.
+          Tip: Use numbers or command aliases.
         </p>
-        <div className="mt-2 space-y-1 text-sm">
+        <div className="mt-2 space-y-1 text-xs sm:text-sm">
           {quickCommands.map((item) => (
             <motion.p
               key={item}

@@ -43,6 +43,11 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
         />
       </button>
 
+      {/* Mobile Menu Label */}
+      <div className="md:hidden fixed bottom-4 right-20 z-50 text-term-gray text-xs sm:text-sm">
+        Navigation
+      </div>
+
       {/* Mobile Overlay */}
       {mobileMenuOpen && (
         <div
