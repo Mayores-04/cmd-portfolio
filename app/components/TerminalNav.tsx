@@ -52,7 +52,22 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
           {`  ╔══════════════════════════════════════╗\n  ║   Hello! I'm Jake Mayores            ║\n  ║   Fullstack Web Developer            ║\n  ╚══════════════════════════════════════╝`}
         </div>
 
-        <div className="mt-2 mb-2 text-term-text">Select a destination:</div>
+        <div className="text-term-green whitespace-pre font-bold hidden xl:block text-xs">
+          {`  ╔══════════════════════════════════════╗\n  ║   `}
+          <span className="text-term-cyan">Select a Destination:</span>
+          {`              ║\n  ╚══════════════════════════════════════╝`}
+        </div>
+
+        <div className="mt-2 mb-2 flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-x-2 text-sm sm:text-base select-none">
+            <span className="text-term-green font-bold">jake_portfolio</span>
+            <span className="text-term-purple font-bold">MINGW64</span>
+          </div>
+
+          <span className="text-term-text">~$</span>
+          <span className="text-term-sm">ls -l</span>
+        </div>
+
         {[
           { key: "0", label: "home", desc: "Home page" },
           { key: "1", label: "about", desc: "profile and values" },
@@ -61,7 +76,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
           { key: "4", label: "socials", desc: "social accounts" },
           { key: "5", label: "resume", desc: "download and summary" },
         ].map((item) => (
-          <div className="flex gap-3 items-baseline" key={item.key}>
+          <div className="flex gap-3 items-baseline text-sm" key={item.key}>
             <span className="w-8 text-term-yellow">[{item.key}]</span>
             <ClickableCmd
               cmdText={item.key}

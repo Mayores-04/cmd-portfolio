@@ -96,7 +96,7 @@ export default function Terminal() {
       return;
     }
     const newPath = getPathForCommand(trimmedCmd, path);
-    const { type } = getTerminalOutputType(trimmedCmd);
+    const { type } = getTerminalOutputType(trimmedCmd, path);
     const output = generateOutput(type, (c: string) => executeCommand(c));
     if (output) {
       setCurrentOutput(output);

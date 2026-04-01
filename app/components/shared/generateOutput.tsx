@@ -1,6 +1,7 @@
 import React from "react";
 import { TerminalOutputType } from "@/services/terminalService";
 import HomePage from "../pages/HomePage";
+import ListingPage from "../pages/ListingPage";
 import AboutPage from "../pages/AboutPage";
 import ProjectsPage from "../pages/ProjectsPage";
 import ContactPage from "../pages/ContactPage";
@@ -14,6 +15,8 @@ export function generateOutput(
   switch (type) {
     case "home":
       return <HomePage />;
+    case "listing":
+      return <ListingPage />;
     case "about":
       return <AboutPage />;
     case "projects":

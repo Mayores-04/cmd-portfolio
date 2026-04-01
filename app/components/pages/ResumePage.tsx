@@ -59,7 +59,7 @@ const ResumePage = () => {
           component architecture, and polished interactive UI
         </motion.p>
         <motion.p variants={itemVariants}>
-          <span className="text-term-yellow">availability:</span>{" "}
+          <span className="text-term-yellow">availability:</span>
           <span className="text-term-green">
             Open to freelance and remote work
           </span>

@@ -7,7 +7,10 @@ const quickCommands = [
   "3 | contact | cat contact.txt   # Contact channels and quick links",
   "4 | socials | cat socials.txt   # Social media profiles",
   "5 | resume                      # Resume summary and download link",
-  "0 | home | menu | help | cd ~  # Return to home/help screen",
+  "cd about|projects|contact|socials|resume  # Navigate directly to a section",
+  "cd .. | cd ~ | cd / | cd       # Return to home",
+  "ls | ls -l                      # List all available pages",
+  "0 | home | menu | help          # Return to home/help screen",
   "clear                          # Clear left terminal command history",
   "sudo                           # Demo command (shows Permission Denied)",
 ];
