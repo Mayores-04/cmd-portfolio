@@ -111,6 +111,26 @@ const ProjectsPage = () => {
     },
   };
 
+  const rowContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const rowItemVariants = {
+    hidden: { opacity: 0, x: -10 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.22 },
+    },
+  };
+
   return (
     <motion.div
       className="w-full h-full text-term-text font-mono p-0 select-none"
@@ -178,11 +198,16 @@ const ProjectsPage = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <motion.tbody
+            variants={rowContainerVariants}
+            initial="hidden"
+            animate="show"
+          >
             {renderedProjects.map((proj) => (
-              <tr
+              <motion.tr
                 key={`${proj.name}-${proj.url}`}
                 className="border-b border-[#232323] last:border-b-0"
+                variants={rowItemVariants}
                 onMouseEnter={(e) => showPreview(proj, e.clientX, e.clientY)}
                 onMouseMove={(e) => showPreview(proj, e.clientX, e.clientY)}
                 onMouseLeave={hidePreview}
@@ -226,9 +251,9 @@ const ProjectsPage = () => {
                 <td className="px-2 py-1 text-[#d4a3df] whitespace-nowrap">
                   {proj.tech}
                 </td>
-              </tr>
+              </motion.tr>
             ))}
-          </tbody>
+          </motion.tbody>
         </table>
       </motion.div>
     </motion.div>

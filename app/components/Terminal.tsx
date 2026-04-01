@@ -132,7 +132,16 @@ export default function Terminal() {
 
   const isCmdActive = (cmd: string) => {
     const currentPath = getPathForCommand(cmd, "~");
-    return path === currentPath && path !== "~";
+    if (path !== currentPath) {
+      return false;
+    }
+
+    // Keep home highlighted when user is at root (~).
+    if (currentPath === "~") {
+      return ["0", "home"].includes(cmd.toLowerCase());
+    }
+
+    return true;
   };
 
   return (

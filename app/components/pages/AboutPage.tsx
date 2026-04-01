@@ -32,12 +32,32 @@ const AboutPage = () => {
 
   const hidePreview = () => setPreviewPos(null);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -10 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.25 },
+    },
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay: 0.05 }}
       className="text-term-text font-mono"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
     >
       {previewPos && (
         <motion.div
@@ -62,9 +82,14 @@ const AboutPage = () => {
         </motion.div>
       )}
 
-      <p className="text-term-cyan">$ cat about.md</p>
+      <motion.p className="text-term-cyan" variants={itemVariants}>
+        $ cat about.md
+      </motion.p>
 
-      <div className="mt-3 border border-[#2b2b2b] rounded-sm bg-black/40 p-3 sm:p-4 space-y-3 text-sm leading-relaxed">
+      <motion.div
+        className="mt-3 space-y-3 text-sm leading-relaxed"
+        variants={itemVariants}
+      >
         <p>
           Hi, I&apos;m{" "}
           <span className="text-term-green font-bold">Jake Mayores</span>, a
@@ -104,18 +129,18 @@ const AboutPage = () => {
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="mt-4 border border-[#2b2b2b] rounded-sm bg-black/40 p-3 sm:p-4">
+      <motion.div className="mt-4" variants={itemVariants}>
         <p className="text-term-cyan">$ ls values/</p>
         <div className="mt-2 space-y-1 text-sm">
           {values.map((value) => (
-            <p key={value}>
+            <motion.p key={value} variants={itemVariants}>
               <span className="text-term-yellow">-</span> {value}
-            </p>
+            </motion.p>
           ))}
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

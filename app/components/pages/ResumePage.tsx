@@ -2,35 +2,71 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const ResumePage = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -10 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.25 },
+    },
+  };
+
+  const lineContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay: 0.05 }}
       className="text-term-text font-mono"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
     >
-      <p className="text-term-cyan">$ cat resume.md</p>
+      <motion.p className="text-term-cyan" variants={itemVariants}>
+        $ cat resume.md
+      </motion.p>
 
-      <div className="mt-3 border border-[#2b2b2b] rounded-sm bg-black/40 p-3 sm:p-4 text-sm space-y-2">
-        <p>
+      <motion.div
+        className="mt-3 text-sm space-y-2"
+        variants={lineContainerVariants}
+      >
+        <motion.p variants={itemVariants}>
           <span className="text-term-yellow">name:</span> Jake Mayores
-        </p>
-        <p>
+        </motion.p>
+        <motion.p variants={itemVariants}>
           <span className="text-term-yellow">track:</span> Fullstack Developer
-        </p>
-        <p>
+        </motion.p>
+        <motion.p variants={itemVariants}>
           <span className="text-term-yellow">current focus:</span> Next.js,
           component architecture, and polished interactive UI
-        </p>
-        <p>
+        </motion.p>
+        <motion.p variants={itemVariants}>
           <span className="text-term-yellow">availability:</span>{" "}
           <span className="text-term-green">
             Open to freelance and remote work
           </span>
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      <div className="mt-4 text-sm">
+      <motion.div className="mt-4 text-sm" variants={itemVariants}>
         <a
           href="https://jake-mayores-portfolio.vercel.app/Mayores_Jake_Resume.pdf"
           target="_blank"
@@ -39,7 +75,7 @@ const ResumePage = () => {
         >
           $ wget Mayores_Jake_Resume.pdf
         </a>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

@@ -54,6 +54,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
 
         <div className="mt-2 mb-2 text-term-text">Select a destination:</div>
         {[
+          { key: "0", label: "home", desc: "Home page" },
           { key: "1", label: "about", desc: "profile and values" },
           { key: "2", label: "projects", desc: "work and stack" },
           { key: "3", label: "contact", desc: "reach me directly" },
