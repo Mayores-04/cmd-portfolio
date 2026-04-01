@@ -9,7 +9,7 @@ const values = [
 ];
 
 const profileImageUrl =
-  "https://jake-mayores-portfolio.vercel.app/images/image.png";
+  "https://my-cmd-portfolio.vercel.app/images/profile_pic.png";
 
 const AboutPage = () => {
   const [previewPos, setPreviewPos] = useState<{

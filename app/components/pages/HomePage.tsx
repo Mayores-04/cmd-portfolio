@@ -12,7 +12,8 @@ const quickCommands = [
   "sudo                           # Demo command (shows Permission Denied)",
 ];
 
-const profileImageUrl = "/images/profile_pic.png";
+const profileImageUrl =
+  "https://my-cmd-portfolio.vercel.app/images/profile_pic.png";
 
 const HomePage = () => {
   const [previewPos, setPreviewPos] = useState<{
