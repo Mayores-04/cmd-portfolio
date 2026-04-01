@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const quickCommands = [
@@ -12,7 +12,29 @@ const quickCommands = [
   "sudo                           # Demo command (shows Permission Denied)",
 ];
 
+const profileImageUrl = "/images/profile_pic.png";
+
 const HomePage = () => {
+  const [previewPos, setPreviewPos] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
+
+  const showPreview = (x: number, y: number) => {
+    const cardWidth = 280;
+    const cardHeight = 240;
+    const safeMargin = 8;
+    const maxLeft = window.innerWidth - cardWidth - safeMargin;
+    const maxTop = window.innerHeight - cardHeight - safeMargin;
+
+    setPreviewPos({
+      left: Math.max(safeMargin, Math.min(x, maxLeft)),
+      top: Math.max(safeMargin, Math.min(y + 12, maxTop)),
+    });
+  };
+
+  const hidePreview = () => setPreviewPos(null);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -40,6 +62,29 @@ const HomePage = () => {
       initial="hidden"
       animate="show"
     >
+      {previewPos && (
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.18 }}
+          className="pointer-events-none fixed z-[120] w-[280px] max-w-[85vw]"
+          style={{ top: previewPos.top, left: previewPos.left }}
+        >
+          <div className="overflow-hidden rounded-md border border-[#38523f] bg-[#0a130d] shadow-[0_0_24px_rgba(0,255,65,0.14)]">
+            <img
+              src={profileImageUrl}
+              alt="Jake Mayores profile"
+              className="h-48 w-full object-cover"
+              loading="lazy"
+            />
+            <div className="border-t border-[#1f2e23] px-3 py-2 text-xs">
+              <p className="text-term-green font-semibold">Jake Mayores</p>
+              <p className="text-term-gray">Fullstack Developer</p>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       <motion.p
         className="text-term-green text-lg sm:text-xl font-bold"
         variants={itemVariants}
@@ -71,6 +116,25 @@ const HomePage = () => {
           <p>
             <span className="text-term-blue">status:</span>{" "}
             <span className="text-term-green">Open to remote work</span>
+          </p>
+          <p className="sm:col-span-2">
+            <span className="text-term-blue">profile:</span>{" "}
+            <a
+              href={profileImageUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-term-cyan break-all hover:underline"
+              onMouseEnter={(e) => showPreview(e.clientX, e.clientY)}
+              onMouseMove={(e) => showPreview(e.clientX, e.clientY)}
+              onMouseLeave={hidePreview}
+              onFocus={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                showPreview(rect.left, rect.bottom);
+              }}
+              onBlur={hidePreview}
+            >
+              {profileImageUrl}
+            </a>
           </p>
         </div>
       </motion.div>
