@@ -3,6 +3,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import TerminalNav from "./TerminalNav";
 import TerminalOutput from "./TerminalOutput";
+import NavigationButtons from "./NavigationButtons";
+import HelpPanel from "./HelpPanel";
+import FirstTimeGuide from "./FirstTimeGuide";
 import {
   getPathForCommand,
   getTerminalOutputType,
@@ -21,6 +24,7 @@ export default function Terminal() {
   const [path, setPath] = useState("~");
   const [isBooting, setIsBooting] = useState(true);
   const [currentOutput, setCurrentOutput] = useState<React.ReactNode>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,13 +35,25 @@ export default function Terminal() {
     });
   }, [history, isBooting]);
 
-  // Keep input focused
+  // Keep input focused (desktop only)
   useEffect(() => {
+    // Check if device is touch device (mobile)
+    const isTouchDevice = () => {
+      return (
+        (typeof window !== "undefined" &&
+          ("ontouchstart" in window ||
+            (navigator as any).maxTouchPoints > 0)) ||
+        false
+      );
+    };
+
     const focusInput = (e?: MouseEvent) => {
       // Only focus if click is NOT inside an input or textarea
+      // AND not on mobile/touch device
       if (
         !isBooting &&
         inputRef.current &&
+        !isTouchDevice() &&
         (!e ||
           !(
             e.target instanceof HTMLElement &&
@@ -48,7 +64,10 @@ export default function Terminal() {
       }
     };
     document.addEventListener("click", focusInput);
-    focusInput();
+    // Don't auto-focus on mount for mobile
+    if (!isTouchDevice()) {
+      focusInput();
+    }
     return () => document.removeEventListener("click", focusInput);
   }, [isBooting]);
 
@@ -95,6 +114,16 @@ export default function Terminal() {
       setHistory([]);
       return;
     }
+
+    // Close mobile menu when help command is executed
+    if (
+      trimmedCmd.toLowerCase() === "help" ||
+      trimmedCmd.toLowerCase() === "0" ||
+      trimmedCmd.toLowerCase() === "menu"
+    ) {
+      setMobileMenuOpen(false);
+    }
+
     const newPath = getPathForCommand(trimmedCmd, path);
     const { type } = getTerminalOutputType(trimmedCmd, path);
     const output = generateOutput(type, (c: string) => executeCommand(c));
@@ -145,25 +174,47 @@ export default function Terminal() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-screen bg-black overflow-hidden relative font-mono text-sm sm:text-base gap-1 p-1">
+    <div className="flex flex-col w-full h-screen bg-black overflow-hidden relative font-mono text-sm sm:text-base">
       {/* Subtle CRT Scanline Overlay */}
       <div className="absolute inset-0 scanline z-50 pointer-events-none opacity-50"></div>
-      <TerminalNav
-        isBooting={isBooting}
-        history={history}
+
+      {/* Navigation Buttons */}
+      <NavigationButtons
+        currentPath={path}
         executeCommand={executeCommand}
-        isCmdActive={isCmdActive}
-        input={input}
-        setInput={setInput}
-        inputRef={inputRef}
-        handleKeyDown={handleKeyDown}
-        bottomRef={bottomRef}
-      />
-      <TerminalOutput
         isBooting={isBooting}
-        currentOutput={currentOutput}
-        path={path}
       />
+
+      {/* Help Panel */}
+      <HelpPanel />
+
+      {/* Main Content Area */}
+      <div className="flex flex-col md:flex-row flex-1 gap-1 p-1 overflow-hidden">
+        <TerminalNav
+          isBooting={isBooting}
+          history={history}
+          executeCommand={executeCommand}
+          isCmdActive={isCmdActive}
+          input={input}
+          setInput={setInput}
+          inputRef={inputRef}
+          handleKeyDown={handleKeyDown}
+          bottomRef={bottomRef}
+          mobileMenuOpen={mobileMenuOpen}
+          setMobileMenuOpen={setMobileMenuOpen}
+        />
+        <TerminalOutput
+          isBooting={isBooting}
+          currentOutput={currentOutput}
+          path={path}
+          executeCommand={executeCommand}
+          mobileMenuOpen={mobileMenuOpen}
+          setMobileMenuOpen={setMobileMenuOpen}
+        />
+      </div>
+
+      {/* First Time Guide */}
+      <FirstTimeGuide executeCommand={executeCommand} />
     </div>
   );
 }

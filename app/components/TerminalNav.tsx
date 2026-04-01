@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { X } from "lucide-react";
 import ClickableCmd from "./shared/ClickableCmd";
 import TerminalPrompt from "./TerminalPrompt";
 
@@ -12,6 +13,8 @@ interface TerminalNavProps {
   inputRef: React.RefObject<HTMLInputElement | null>;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   bottomRef: React.RefObject<HTMLDivElement | null>;
+  mobileMenuOpen: boolean;
+  setMobileMenuOpen: (value: boolean) => void;
 }
 
 const TerminalNav: React.FC<TerminalNavProps> = ({
@@ -24,30 +27,26 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
   inputRef,
   handleKeyDown,
   bottomRef,
+  mobileMenuOpen,
+  setMobileMenuOpen,
 }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEnd = e.changedTouches[0].clientX;
+    const distance = touchStart - touchEnd;
+    // If swiped left more than 50px, close the menu
+    if (distance > 50) {
+      setMobileMenuOpen(false);
+    }
+  };
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="md:hidden fixed bottom-4 right-4 z-50 p-3 bg-[#1E1E1E] border border-[#333] rounded-sm hover:bg-[#2E2E2E] transition-colors"
-        aria-label="Toggle navigation"
-      >
-        <img
-          src="https://git-scm.com/favicon.ico"
-          alt="Menu"
-          className="w-6 h-6 opacity-80"
-          onError={(e) => (e.currentTarget.style.display = "none")}
-        />
-      </button>
-
-      {/* Mobile Menu Label */}
-      <div className="md:hidden fixed bottom-4 right-20 z-50 text-term-gray text-xs sm:text-sm">
-        Navigation
-      </div>
-
       {/* Mobile Overlay */}
       {mobileMenuOpen && (
         <div
@@ -58,6 +57,8 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
 
       {/* Navigation */}
       <div
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         className={`flex flex-col ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 transition-transform duration-300 fixed md:relative bottom-0 left-0 w-full md:w-[35%] h-[100vh] md:h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden z-40 md:z-10`}
@@ -75,8 +76,20 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
               jake_portfolio MINGW64:/~jake/nav
             </span>
           </div>
-          <div className="flex items-center gap-4 text-[#888]">
-            {/* ...window controls... */}
+          <div className="flex items-center gap-4">
+            {/* Close button for mobile menu */}
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="md:hidden flex items-center justify-center p-1 text-term-gray hover:text-term-green transition-colors"
+              aria-label="Close menu"
+              title="Close menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            {/* Desktop: empty space for window controls */}
+            <div className="hidden md:flex items-center gap-4 text-[#888]">
+              {/* ...window controls... */}
+            </div>
           </div>
         </div>
         {/* Terminal Body */}
@@ -176,6 +189,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
                   spellCheck={false}
                   autoComplete="off"
                   autoFocus
+                  inputMode="none"
                 />
               </div>
             </div>

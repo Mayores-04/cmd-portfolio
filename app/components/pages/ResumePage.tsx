@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const ResumePage = () => {
+const ResumePage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
+  executeCommand,
+}) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {

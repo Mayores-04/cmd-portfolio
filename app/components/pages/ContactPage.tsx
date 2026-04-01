@@ -2,7 +2,9 @@ import React from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
-const ContactPage = () => {
+const ContactPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
+  executeCommand,
+}) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {

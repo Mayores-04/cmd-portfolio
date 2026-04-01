@@ -74,7 +74,9 @@ const projects: Project[] = [
   },
 ];
 
-const ProjectsPage = () => {
+const ProjectsPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
+  executeCommand,
+}) => {
   const [activePreview, setActivePreview] = useState<{
     project: Project;
     top: number;

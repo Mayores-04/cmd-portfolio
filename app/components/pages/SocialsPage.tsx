@@ -9,40 +9,41 @@ import {
 import { FiExternalLink } from "react-icons/fi";
 import { motion } from "framer-motion";
 
-const socials = [
-  {
-    name: "GitHub",
-    url: "https://github.com/Mayores-04",
-    display: "github.com/Mayores-04",
-    icon: FaGithub,
-  },
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/jake-mayores-81677530a/",
-    display: "linkedin.com/in/jake-mayores-81677530a",
-    icon: FaLinkedin,
-  },
-  {
-    name: "Twitter",
-    url: "https://twitter.com/your-profile",
-    display: "twitter.com/your-profile",
-    icon: FaTwitter,
-  },
-  {
-    name: "Facebook",
-    url: "https://www.facebook.com/jakejmayores",
-    display: "facebook.com/jakejmayores",
-    icon: FaFacebook,
-  },
-  {
-    name: "Instagram",
-    url: "https://www.instagram.com/mayoresjake/",
-    display: "instagram.com/mayoresjake",
-    icon: FaInstagram,
-  },
-];
-
-const SocialsPage = () => {
+const SocialsPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
+  executeCommand,
+}) => {
+  const socials = [
+    {
+      name: "GitHub",
+      url: "https://github.com/Mayores-04",
+      display: "github.com/Mayores-04",
+      icon: FaGithub,
+    },
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/jake-mayores-81677530a/",
+      display: "linkedin.com/in/jake-mayores-81677530a",
+      icon: FaLinkedin,
+    },
+    {
+      name: "Twitter",
+      url: "https://twitter.com/your-profile",
+      display: "twitter.com/your-profile",
+      icon: FaTwitter,
+    },
+    {
+      name: "Facebook",
+      url: "https://www.facebook.com/jakejmayores",
+      display: "facebook.com/jakejmayores",
+      icon: FaFacebook,
+    },
+    {
+      name: "Instagram",
+      url: "https://www.instagram.com/mayoresjake/",
+      display: "instagram.com/mayoresjake",
+      icon: FaInstagram,
+    },
+  ];
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {

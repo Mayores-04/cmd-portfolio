@@ -18,15 +18,15 @@ export function generateOutput(
     case "listing":
       return <ListingPage />;
     case "about":
-      return <AboutPage />;
+      return <AboutPage executeCommand={executeCommand} />;
     case "projects":
-      return <ProjectsPage />;
+      return <ProjectsPage executeCommand={executeCommand} />;
     case "contact":
-      return <ContactPage />;
+      return <ContactPage executeCommand={executeCommand} />;
     case "socials":
-      return <SocialsPage />;
+      return <SocialsPage executeCommand={executeCommand} />;
     case "resume":
-      return <ResumePage />;
+      return <ResumePage executeCommand={executeCommand} />;
     case "sudo":
       return <div>Permission Denied</div>;
     case "notfound":

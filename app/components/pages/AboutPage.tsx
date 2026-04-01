@@ -11,7 +11,9 @@ const values = [
 const profileImageUrl =
   "https://my-cmd-portfolio.vercel.app/images/profile_pic.png";
 
-const AboutPage = () => {
+const AboutPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
+  executeCommand,
+}) => {
   const [previewPos, setPreviewPos] = useState<{
     top: number;
     left: number;
