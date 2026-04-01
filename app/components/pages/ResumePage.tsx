@@ -68,7 +68,7 @@ const ResumePage = () => {
 
       <motion.div className="mt-4 text-sm" variants={itemVariants}>
         <a
-          href="https://jake-mayores-portfolio.vercel.app/Mayores_Jake_Resume.pdf"
+          href="https://my-cmd-portfolio.vercel.app/Mayores_Jake_Resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="text-term-cyan hover:text-[#7ffcff] hover:underline"
