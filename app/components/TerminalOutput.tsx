@@ -13,7 +13,7 @@ const TerminalOutput: React.FC<TerminalOutputProps> = ({
   currentOutput,
   path,
 }) => (
-  <div className="flex flex-col w-full md:w-[65%] h-[60%] md:h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden z-10">
+  <div className="flex flex-col w-full md:w-[65%] h-[calc(100vh-100px)] md:h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden z-10">
     {/* Window Chrome */}
     <div className="flex items-center justify-between bg-[#1E1E1E] px-4 py-2 border-b border-[#333] select-none">
       <div className="flex items-center gap-2">
