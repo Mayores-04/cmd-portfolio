@@ -9,6 +9,7 @@ type Project = {
   url: string;
   image: string;
   tech: string;
+  description: string;
 };
 
 const getPreviewImage = (project: Project) =>
@@ -23,7 +24,9 @@ const projects: Project[] = [
     name: "Portfolio",
     url: "https://jake-mayores-portfolio.vercel.app",
     image: "/images/portfolio1.png",
-    tech: "Next.js, TypeScript, Framer Motion, Tailwind CSS",
+    tech: "Next.js, TypeScript, Tailwind CSS, Node.js",
+    description:
+      "Terminal-inspired personal portfolio with interactive command navigation and animated UI.",
   },
   {
     permissions: "-rw-r--r--",
@@ -31,8 +34,10 @@ const projects: Project[] = [
     date: "Mar 02",
     name: "Portfolio",
     url: "https://jakemayores.vercel.app",
-    image: "https://jakemayores.vercel.app/images/Portfolio.PNG",
-    tech: "Next.js, Framer Motion, Tailwind CSS",
+    image: "/images/Portfolio1.PNG",
+    tech: "Next.js, TypeScript, Tailwind CSS, Node.js",
+    description:
+      "Modern personal showcase website featuring projects, skills, and contact pages.",
   },
   {
     permissions: "-rw-r--r--",
@@ -40,8 +45,10 @@ const projects: Project[] = [
     date: "Feb 18",
     name: "EmailSender",
     url: "https://jm-email-sender.vercel.app",
-    image: "https://jakemayores.vercel.app/images/EmailSender.png",
+    image: "/images/EmailSender.png",
     tech: "React, Node.js, EmailJS",
+    description:
+      "Email utility app for composing and sending messages with a clean and simple interface.",
   },
   {
     permissions: "-rw-r--r--",
@@ -49,8 +56,10 @@ const projects: Project[] = [
     date: "Jan 06",
     name: "GoCarExpress",
     url: "https://go-car-express.vercel.app",
-    image: "https://jakemayores.vercel.app/images/GoCarExpress.png",
-    tech: "Next.js, Tailwind CSS, TypeScript",
+    image: "/images/GoCarExpress.png",
+    tech: "Next.js, Tailwind CSS, TypeScript, Express.js, MongoDB",
+    description:
+      "Admin-focused car service platform with backend-driven workflows for managing bookings, service status, customer records, and operational updates.",
   },
   {
     permissions: "-rw-r--r--",
@@ -58,8 +67,10 @@ const projects: Project[] = [
     date: "Sep 27",
     name: "MovieMunch",
     url: "https://github.com/Mayores-04/Movie_reservation",
-    image: "https://jakemayores.vercel.app/images/MovieMunch.PNG",
-    tech: "HTML, CSS, JavaScript",
+    image: "/images/MovieMunch.PNG",
+    tech: "C#, MongoDB, Figma, Bunifu UI, Guna UI",
+    description:
+      "The MovieMunch System is an innovative desktop application designed to enhance the cinema experience. Book movie tickets and pre-order snacks. This is a fully functional application.",
   },
 ];
 
@@ -159,6 +170,9 @@ const ProjectsPage = () => {
               </p>
               <p className="text-term-gray">
                 {activePreview.project.url.replace("https://", "")}
+              </p>
+              <p className="text-term-text mt-1 leading-relaxed">
+                {activePreview.project.description}
               </p>
             </div>
           </div>
