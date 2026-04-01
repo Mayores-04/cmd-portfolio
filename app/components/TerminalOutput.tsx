@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { lineContainer, contentReveal } from "@/utils/animation";
 
 interface TerminalOutputProps {
   isBooting: boolean;
@@ -23,7 +24,8 @@ const TerminalOutput: React.FC<TerminalOutputProps> = ({
           onError={(e) => (e.currentTarget.style.display = "none")}
         />
         <span className="text-term-text text-xs sm:text-sm truncate">
-          MINGW64:/~jake/output{path !== "~" ? path.replace("~", "") : ""}
+          jake_portfolio MINGW64:/~jake/output
+          {path !== "~" ? path.replace("~", "") : ""}
         </span>
       </div>
       <div className="flex items-center gap-4 text-[#888]">
@@ -35,9 +37,9 @@ const TerminalOutput: React.FC<TerminalOutputProps> = ({
       {!isBooting && currentOutput && (
         <motion.div
           key={path}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
+          variants={contentReveal}
+          initial="hidden"
+          animate="show"
           className="h-full"
         >
           {currentOutput}

@@ -25,6 +25,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
   handleKeyDown,
   bottomRef,
 }) => (
+  // Descriptions make command intent obvious for first-time visitors.
   <div className="flex flex-col w-full md:w-[35%] h-[40%] md:h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden z-10">
     {/* Window Chrome */}
     <div className="flex items-center justify-between bg-[#1E1E1E] px-4 py-2 border-b border-[#333] select-none">
@@ -36,7 +37,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
           onError={(e) => (e.currentTarget.style.display = "none")}
         />
         <span className="text-term-text text-xs sm:text-sm truncate">
-          MINGW64:/~jake/nav
+          jake_portfolio MINGW64:/~jake/nav
         </span>
       </div>
       <div className="flex items-center gap-4 text-[#888]">
@@ -48,25 +49,28 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
       {/* Static Navigation Menu */}
       <div className="flex flex-col gap-1 mb-6">
         <div className="text-term-green whitespace-pre font-bold hidden xl:block text-xs">
-          {`  ╔══════════════════════════════════════╗\n  ║   Hello! I'm Jake Mayores            ║\n  ║   Front-end Web Developer            ║\n  ╚══════════════════════════════════════╝`}
+          {`  ╔══════════════════════════════════════╗\n  ║   Hello! I'm Jake Mayores            ║\n  ║   Fullstack Web Developer            ║\n  ╚══════════════════════════════════════╝`}
         </div>
-        <div className="text-term-green font-bold xl:hidden border border-term-green p-2 mb-2 inline-block text-xs">
-          Hello! I'm Jake Mayores
-          <br />
-          Front-end Web Developer
-        </div>
+
         <div className="mt-2 mb-2 text-term-text">Select a destination:</div>
-        {[1, 2, 3, 4, 5].map((num) => (
-          <div className="flex gap-4" key={num}>
-            <span className="w-8 text-term-yellow">[{num}]</span>
+        {[
+          { key: "1", label: "about", desc: "profile and values" },
+          { key: "2", label: "projects", desc: "work and stack" },
+          { key: "3", label: "contact", desc: "reach me directly" },
+          { key: "4", label: "socials", desc: "social accounts" },
+          { key: "5", label: "resume", desc: "download and summary" },
+        ].map((item) => (
+          <div className="flex gap-3 items-baseline" key={item.key}>
+            <span className="w-8 text-term-yellow">[{item.key}]</span>
             <ClickableCmd
-              cmdText={String(num)}
-              label={
-                ["about", "projects", "contact", "socials", "resume"][num - 1]
-              }
+              cmdText={item.key}
+              label={item.label}
               runCommand={executeCommand}
-              isActive={isCmdActive(String(num))}
+              isActive={isCmdActive(item.key)}
             />
+            <span className="text-term-gray text-xs hidden lg:inline">
+              # {item.desc}
+            </span>
           </div>
         ))}
       </div>
@@ -126,7 +130,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
           label="'help'"
           runCommand={executeCommand}
         />{" "}
-        or{" "}
+        for command docs, or{" "}
         <ClickableCmd
           cmdText="clear"
           label="'clear'"
