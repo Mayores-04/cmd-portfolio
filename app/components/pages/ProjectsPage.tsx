@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 type Project = {
@@ -104,6 +104,16 @@ const ProjectsPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
     new Map(projects.map((project) => [project.url, project])).values(),
   );
 
+  useEffect(() => {
+    // Warm the browser cache so hover previews appear instantly.
+    renderedProjects.forEach((project) => {
+      const preloadImg = new Image();
+      preloadImg.src = getPreviewImage(project);
+      preloadImg.fetchPriority = "high";
+      preloadImg.loading = "eager";
+    });
+  }, [renderedProjects]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -164,7 +174,8 @@ const ProjectsPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
               src={getPreviewImage(activePreview.project)}
               alt={`${activePreview.project.name} preview`}
               className="h-40 w-full object-cover"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
             />
             <div className="border-t border-[#1f2e23] px-3 py-2 text-xs">
               <p className="text-term-green font-semibold">

@@ -143,7 +143,8 @@ const HomePage = () => {
               src={profileImageUrl}
               alt="Jake Mayores profile"
               className="h-48 w-full object-cover"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
             />
             <div className="border-t border-[#1f2e23] px-3 py-2 text-xs">
               <p className="text-term-green font-semibold">Jake Mayores</p>
@@ -237,7 +238,8 @@ const HomePage = () => {
                 alt={skill.name}
                 width={32}
                 height={32}
-                loading="lazy"
+                loading="eager"
+                fetchPriority="high"
                 className="w-6 h-6 sm:w-8 sm:h-8"
               />
             </motion.a>

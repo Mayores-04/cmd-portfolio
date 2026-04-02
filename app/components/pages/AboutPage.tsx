@@ -74,7 +74,8 @@ const AboutPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
               src={profileImageUrl}
               alt="Jake Mayores profile"
               className="h-48 w-full object-cover"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
             />
             <div className="border-t border-[#1f2e23] px-3 py-2 text-xs">
               <p className="text-term-green font-semibold">Jake Mayores</p>
