@@ -9,7 +9,7 @@ const values = [
 ];
 
 const profileImageUrl =
-  "https://my-cmd-portfolio.vercel.app/images/profile_pic.png";
+  "https://jake-cmd-portfolio.vercel.app/images/profile_pic.png";
 
 const AboutPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
   executeCommand,
