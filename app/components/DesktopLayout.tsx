@@ -48,6 +48,8 @@ export default function DesktopLayout({
   bottomRef,
 }: DesktopLayoutProps) {
   const [isResizing, setIsResizing] = useState(false);
+  const [startInputWidth, setStartInputWidth] = useState(inputWidth);
+  const [startMouseX, setStartMouseX] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Resize handler for dragging divider
@@ -57,29 +59,65 @@ export default function DesktopLayout({
 
       const container = containerRef.current;
       const containerRect = container.getBoundingClientRect();
-      const newWidth =
-        ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
-      // Minimum 25% for input, maximum 50%
-      if (newWidth >= 25 && newWidth <= 50) {
-        setInputWidth(newWidth);
+      // Calculate movement delta from where drag started
+      const deltaX = e.clientX - startMouseX;
+      const containerWidth = containerRect.width;
+      const deltaPercent = (deltaX / containerWidth) * 100;
+
+      let newWidth: number;
+
+      if (layout === "input-left") {
+        // Input on left: drag right = expand input
+        newWidth = startInputWidth + deltaPercent;
+      } else {
+        // Input on right: drag left = expand input (opposite)
+        newWidth = startInputWidth - deltaPercent;
+      }
+
+      // Constraints based on layout
+      if (layout === "input-left") {
+        // Input on left: 25% to 50%
+        if (newWidth >= 25 && newWidth <= 50) {
+          setInputWidth(newWidth);
+        }
+      } else {
+        // Input on right: 25% to 50%
+        if (newWidth >= 25 && newWidth <= 50) {
+          setInputWidth(newWidth);
+        }
       }
     };
 
     const handleMouseUp = () => {
       setIsResizing(false);
+      document.body.style.userSelect = "auto";
+      document.body.style.cursor = "auto";
     };
 
     if (isResizing) {
-      document.addEventListener("mousemove", handleMouseMove);
+      // Only disable text selection, not pointer events
+      document.body.style.userSelect = "none";
+      document.body.style.cursor = "col-resize";
+      document.addEventListener("mousemove", handleMouseMove, {
+        passive: false,
+      });
       document.addEventListener("mouseup", handleMouseUp);
     }
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
+      document.body.style.userSelect = "auto";
+      document.body.style.cursor = "auto";
     };
-  }, [isResizing, setInputWidth]);
+  }, [isResizing, setInputWidth, layout, startInputWidth, startMouseX]);
+
+  const handleDividerMouseDown = (e: React.MouseEvent) => {
+    setIsResizing(true);
+    setStartInputWidth(inputWidth);
+    setStartMouseX(e.clientX);
+  };
 
   return (
     <div
@@ -92,7 +130,9 @@ export default function DesktopLayout({
           {!inputMinimized && (
             <>
               <div
-                className="flex flex-col bg-term-bg border border-[#333] rounded-sm overflow-hidden"
+                className={`flex flex-col bg-term-bg border border-[#333] rounded-sm overflow-hidden ${
+                  isResizing ? "" : "transition-all duration-75"
+                }`}
                 style={{
                   width: outputMinimized ? "100%" : `${inputWidth}%`,
                 }}
@@ -118,7 +158,7 @@ export default function DesktopLayout({
               {!outputMinimized && (
                 <div
                   className="w-1 bg-[#2b2b2b] cursor-col-resize hover:bg-term-green/50 transition-colors"
-                  onMouseDown={() => setIsResizing(true)}
+                  onMouseDown={handleDividerMouseDown}
                 />
               )}
             </>
@@ -126,7 +166,9 @@ export default function DesktopLayout({
 
           {!outputMinimized && (
             <div
-              className="flex flex-col bg-term-bg border border-[#333] rounded-sm overflow-hidden"
+              className={`flex flex-col bg-term-bg border border-[#333] rounded-sm overflow-hidden ${
+                isResizing ? "" : "transition-all duration-75"
+              }`}
               style={{
                 width: inputMinimized ? "100%" : `${100 - inputWidth}%`,
               }}
@@ -153,7 +195,9 @@ export default function DesktopLayout({
           {!outputMinimized && (
             <>
               <div
-                className="flex flex-col bg-term-bg border border-[#333] rounded-sm overflow-hidden"
+                className={`flex flex-col bg-term-bg border border-[#333] rounded-sm overflow-hidden ${
+                  isResizing ? "" : "transition-all duration-75"
+                }`}
                 style={{
                   width: inputMinimized ? "100%" : `${100 - inputWidth}%`,
                 }}
@@ -174,7 +218,7 @@ export default function DesktopLayout({
               {!inputMinimized && (
                 <div
                   className="w-1 bg-[#2b2b2b] cursor-col-resize hover:bg-term-green/50 transition-colors"
-                  onMouseDown={() => setIsResizing(true)}
+                  onMouseDown={handleDividerMouseDown}
                 />
               )}
             </>
@@ -182,7 +226,9 @@ export default function DesktopLayout({
 
           {!inputMinimized && (
             <div
-              className="flex flex-col bg-term-bg border border-[#333] rounded-sm overflow-hidden"
+              className={`flex flex-col bg-term-bg border border-[#333] rounded-sm overflow-hidden ${
+                isResizing ? "" : "transition-all duration-75"
+              }`}
               style={{
                 width: outputMinimized ? "100%" : `${inputWidth}%`,
               }}
