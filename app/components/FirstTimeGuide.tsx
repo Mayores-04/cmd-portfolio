@@ -87,10 +87,12 @@ const FirstTimeGuide: React.FC<FirstTimeGuideProps> = ({ executeCommand }) => {
               <div className="bg-[#0f0f0f] border border-[#333] rounded p-3 space-y-2">
                 <p className="text-term-cyan font-bold">2️⃣ Type commands</p>
                 <p className="text-term-gray text-xs">
-                  Type commands like{" "}
-                  <code className="bg-[#1a1a1a] px-1 rounded">about</code>,{" "}
-                  <code className="bg-[#1a1a1a] px-1 rounded">projects</code>,{" "}
-                  <code className="bg-[#1a1a1a] px-1 rounded">contact</code>, or{" "}
+                  Try commands like{" "}
+                  <code className="bg-[#1a1a1a] px-1 rounded">1</code> (about),{" "}
+                  <code className="bg-[#1a1a1a] px-1 rounded">2</code>{" "}
+                  (projects),{" "}
+                  <code className="bg-[#1a1a1a] px-1 rounded">3</code>{" "}
+                  (contact),{" "}
                   <code className="bg-[#1a1a1a] px-1 rounded">help</code>
                 </p>
               </div>

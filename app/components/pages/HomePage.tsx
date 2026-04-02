@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const quickCommands = [
-  "1 | about | cat about.md        # About me, values, and developer background",
-  "2 | projects | ls projects/     # Project index and tech stack",
-  "3 | contact | cat contact.txt   # Contact channels and quick links",
-  "4 | socials | cat socials.txt   # Social media profiles",
-  "5 | resume                      # Resume summary and download link",
-  "cd about|projects|contact|socials|resume  # Navigate directly to a section",
-  "cd .. | cd ~ | cd / | cd       # Return to home",
-  "ls | ls -l                      # List all available pages",
-  "0 | home | menu | help          # Return to home/help screen",
-  "clear                          # Clear left terminal command history",
-  "sudo                           # Demo command (shows Permission Denied)",
+  "1 | cat about.md           # About me, values, and developer background",
+  "2 | ls projects/           # Project index and tech stack",
+  "3 | cat contact.txt        # Contact channels and quick links",
+  "4 | cat socials.txt        # Social media profiles",
+  "5                          # Resume summary and download link",
+  "cd about|projects|contact|socials|resume  # Navigate to a section",
+  "cd .. | cd ~ | cd / | cd   # Return to home",
+  "ls | ls -l                 # List all available pages",
+  "0 | home | menu | help     # Return to home/help screen",
+  "sudo                       # Demo command (shows Permission Denied)",
 ];
 
 const skills = [
