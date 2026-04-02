@@ -1,10 +1,23 @@
-import React from "react";
+"use client";
+
+import React, { FormEvent, useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
 const ContactPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
   executeCommand,
 }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -25,9 +38,59 @@ const ContactPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
     },
   };
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to send message");
+      }
+
+      setStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+
+      setTimeout(() => {
+        setStatus("idle");
+      }, 3000);
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : "Failed to send message. Please try again later.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <motion.div
-      className="w-full h-full text-term-text font-mono p-0 select-none"
+      className="w-full h-full text-term-text font-mono p-0 select-none overflow-y-auto"
       variants={containerVariants}
       initial="hidden"
       animate="show"
@@ -113,24 +176,97 @@ const ContactPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
         </p>
       </motion.div>
 
-      <motion.form
-        className="pl-2 border border-[#2b2b2b] rounded-sm bg-black/40 p-3"
-        onSubmit={(e) => e.preventDefault()}
+      <motion.div
+        className="border-t border-[#2b2b2b] my-4"
+        variants={itemVariants}
+      />
+
+      <motion.div
+        className="text-term-blue text-sm mb-2"
         variants={itemVariants}
       >
-        <div className="flex flex-col gap-2 max-w-md">
-          <label className="text-term-blue text-xs mb-1" htmlFor="name">
-            name:
-          </label>
-          <div className="flex items-center">
+        --- send message ---
+      </motion.div>
+
+      <motion.form
+        className="pl-2 border border-[#2b2b2b] rounded-sm bg-black/40 p-3 max-w-md"
+        onSubmit={handleSubmit}
+        variants={itemVariants}
+      >
+        <div className="flex flex-col gap-3">
+          <div>
+            <label className="text-term-blue text-xs mb-1 block" htmlFor="name">
+              name:
+            </label>
             <input
               id="name"
               type="text"
-              className="bg-transparent border-none outline-none text-term-text placeholder-[#6d6d6d] text-sm font-mono mb-2"
-              placeholder="Press Enter to submit each field."
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              disabled={loading}
+              className="w-full bg-transparent border-none outline-none text-term-text placeholder-[#6d6d6d] text-sm font-mono"
+              placeholder="your name"
               autoComplete="off"
             />
           </div>
+
+          <div>
+            <label
+              className="text-term-blue text-xs mb-1 block"
+              htmlFor="email"
+            >
+              email:
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              disabled={loading}
+              className="w-full bg-transparent border-none outline-none text-term-text placeholder-[#6d6d6d] text-sm font-mono"
+              placeholder="your@email.com"
+              autoComplete="off"
+            />
+          </div>
+
+          <div>
+            <label
+              className="text-term-blue text-xs mb-1 block"
+              htmlFor="message"
+            >
+              message:
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              disabled={loading}
+              className="w-full bg-transparent border-none outline-none text-term-text placeholder-[#6d6d6d] text-sm font-mono resize-none"
+              placeholder="your message here..."
+              rows={4}
+              autoComplete="off"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="text-term-cyan hover:text-term-green disabled:text-term-gray transition-colors mt-2 cursor-pointer font-mono text-sm"
+          >
+            {loading ? "sending..." : "$ send"}
+          </button>
+
+          {status === "success" && (
+            <p className="text-term-green text-xs">
+              ✓ message sent successfully
+            </p>
+          )}
+          {status === "error" && (
+            <p className="text-term-red text-xs">✗ {errorMsg}</p>
+          )}
         </div>
       </motion.form>
     </motion.div>

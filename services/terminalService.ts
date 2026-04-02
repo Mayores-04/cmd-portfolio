@@ -71,23 +71,18 @@ function resolveCommandType(
     case "ls -l":
       return "listing";
     case "1":
-    case "about":
     case "cat about.md":
       return "about";
     case "2":
-    case "projects":
     case "ls projects/":
       return "projects";
     case "3":
-    case "contact":
     case "cat contact.txt":
       return "contact";
     case "4":
-    case "socials":
     case "cat socials.txt":
       return "socials";
     case "5":
-    case "resume":
       return "resume";
     case "sudo":
       return "sudo";
