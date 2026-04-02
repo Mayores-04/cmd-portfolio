@@ -34,7 +34,7 @@ const projects: Project[] = [
     date: "Mar 02",
     name: "Portfolio",
     url: "https://jakemayores.vercel.app",
-    image: "/images/Portfolio1.PNG",
+    image: "/images/Portfolio2.PNG",
     tech: "Next.js, TypeScript, Tailwind CSS, Node.js",
     description:
       "Modern personal showcase website featuring projects, skills, and contact pages.",
