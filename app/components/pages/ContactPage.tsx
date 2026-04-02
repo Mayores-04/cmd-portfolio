@@ -59,7 +59,7 @@ const ContactPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
         <div className="flex items-center gap-2 text-term-yellow">
           <MapPin size={16} className="inline-block" />
           <span className="text-term-text">
-            Manila, Philippines{" "}
+            Cainta, Rizal, Philippines{" "}
             <span className="text-term-gray">(Open to Remote)</span>
           </span>
         </div>
