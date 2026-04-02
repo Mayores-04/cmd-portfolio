@@ -74,11 +74,12 @@ const FirstTimeGuide: React.FC<FirstTimeGuideProps> = ({ executeCommand }) => {
               {/* Option 1 */}
               <div className="bg-[#0f0f0f] border border-[#333] rounded p-3 space-y-2">
                 <p className="text-term-green font-bold">
-                  1️⃣ Click the buttons
+                  1️⃣ Use the command menu
                 </p>
                 <p className="text-term-gray text-xs">
-                  Use the navigation buttons at the top to explore different
-                  sections.
+                  View command options in the left panel (use the menu button on
+                  mobile). Click items like [1] about, [2] projects, [3]
+                  contact, etc.
                 </p>
               </div>
 
@@ -88,8 +89,9 @@ const FirstTimeGuide: React.FC<FirstTimeGuideProps> = ({ executeCommand }) => {
                 <p className="text-term-gray text-xs">
                   Type commands like{" "}
                   <code className="bg-[#1a1a1a] px-1 rounded">about</code>,{" "}
-                  <code className="bg-[#1a1a1a] px-1 rounded">projects</code>,
-                  or <code className="bg-[#1a1a1a] px-1 rounded">ls</code>
+                  <code className="bg-[#1a1a1a] px-1 rounded">projects</code>,{" "}
+                  <code className="bg-[#1a1a1a] px-1 rounded">contact</code>, or{" "}
+                  <code className="bg-[#1a1a1a] px-1 rounded">help</code>
                 </p>
               </div>
 

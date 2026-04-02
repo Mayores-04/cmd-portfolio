@@ -15,6 +15,9 @@ interface TerminalNavProps {
   bottomRef: React.RefObject<HTMLDivElement | null>;
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (value: boolean) => void;
+  onMinimize?: () => void;
+  isDesktopOnly?: boolean;
+  onLayoutClick?: () => void;
 }
 
 const TerminalNav: React.FC<TerminalNavProps> = ({
@@ -29,6 +32,9 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
   bottomRef,
   mobileMenuOpen,
   setMobileMenuOpen,
+  onMinimize,
+  isDesktopOnly = false,
+  onLayoutClick,
 }) => {
   const [touchStart, setTouchStart] = useState(0);
 
@@ -47,21 +53,25 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
 
   return (
     <>
-      {/* Mobile Overlay */}
-      {mobileMenuOpen && (
+      {/* Mobile Overlay - only on mobile */}
+      {!isDesktopOnly && mobileMenuOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black/50 z-40"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
-      {/* Navigation */}
+      {/* Navigation Container */}
       <div
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
+        onTouchStart={!isDesktopOnly ? handleTouchStart : undefined}
+        onTouchEnd={!isDesktopOnly ? handleTouchEnd : undefined}
         className={`flex flex-col ${
-          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 fixed md:relative bottom-0 left-0 w-full md:w-[35%] h-[100vh] md:h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden z-40 md:z-10`}
+          !isDesktopOnly && mobileMenuOpen
+            ? "translate-x-0"
+            : !isDesktopOnly
+              ? "-translate-x-full"
+              : ""
+        } ${!isDesktopOnly ? "md:translate-x-0 transition-transform duration-300 fixed md:relative bottom-0 left-0 w-full md:w-[25%]" : ""} h-[100vh] md:h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden ${isDesktopOnly ? "" : "z-40 md:z-10"}`}
       >
         {/* Window Chrome */}
         <div className="flex items-center justify-between bg-[#1E1E1E] px-4 py-2 border-b border-[#333] select-none">
@@ -77,15 +87,48 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
             </span>
           </div>
           <div className="flex items-center gap-4">
-            {/* Close button for mobile menu */}
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="md:hidden flex items-center justify-center p-1 text-term-gray hover:text-term-green transition-colors"
-              aria-label="Close menu"
-              title="Close menu"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            {/* Close button for mobile menu - only on mobile */}
+            {!isDesktopOnly && (
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="md:hidden flex items-center justify-center p-1 text-term-gray hover:text-term-green transition-colors"
+                aria-label="Close menu"
+                title="Close menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Desktop window control buttons (hidden on mobile) */}
+            <div className="hidden md:flex items-center gap-2 text-term-gray">
+              {/* Minimize button */}
+              <button
+                onClick={onMinimize}
+                className="flex items-center justify-center w-6 h-6 rounded hover:bg-[#444] transition-colors text-xs font-bold"
+                aria-label="Minimize"
+                title="Minimize"
+              >
+                −
+              </button>
+              {/* Maximize/Layout button */}
+              <button
+                onClick={onLayoutClick}
+                className="flex items-center justify-center w-6 h-6 rounded hover:bg-[#444] transition-colors text-xs cursor-pointer"
+                aria-label="Layout options"
+                title="Change layout"
+              >
+                □
+              </button>
+              {/* Close button (visual only on non-mobile) */}
+              <button
+                className="flex items-center justify-center w-6 h-6 rounded hover:bg-[#444] transition-colors"
+                aria-label="Close"
+                title="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
             {/* Desktop: empty space for window controls */}
             <div className="hidden md:flex items-center gap-4 text-[#888]">
               {/* ...window controls... */}

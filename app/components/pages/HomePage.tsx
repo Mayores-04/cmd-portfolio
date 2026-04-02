@@ -15,6 +15,70 @@ const quickCommands = [
   "sudo                           # Demo command (shows Permission Denied)",
 ];
 
+const skills = [
+  {
+    name: "JavaScript",
+    url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg",
+  },
+  {
+    name: "TypeScript",
+    url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg",
+  },
+  {
+    name: "Java",
+    url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg",
+  },
+  {
+    name: "React",
+    url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg",
+  },
+  {
+    name: "CSS3",
+    url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg",
+  },
+  {
+    name: "HTML5",
+    url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg",
+  },
+  {
+    name: "Tailwind",
+    url: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
+  },
+  { name: "React Native", url: "https://reactnative.dev/img/header_logo.svg" },
+  {
+    name: "MongoDB",
+    url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg",
+  },
+  {
+    name: "MSSQL",
+    url: "https://www.svgrepo.com/show/303229/microsoft-sql-server-logo.svg",
+  },
+  {
+    name: "Firebase",
+    url: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
+  },
+  {
+    name: "Figma",
+    url: "https://www.vectorlogo.zone/logos/figma/figma-icon.svg",
+  },
+  {
+    name: "Postman",
+    url: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg",
+  },
+  {
+    name: "Next.js",
+    url: "https://cdn.worldvectorlogo.com/logos/nextjs-2.svg",
+  },
+  {
+    name: "Git",
+    url: "https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg",
+  },
+  {
+    name: "Arduino",
+    url: "https://cdn.worldvectorlogo.com/logos/arduino-1.svg",
+  },
+];
+
 const profileImageUrl =
   "https://my-cmd-portfolio.vercel.app/images/profile_pic.png";
 
@@ -145,6 +209,39 @@ const HomePage = () => {
               {profileImageUrl}
             </a>
           </p>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="mt-4 border border-[#2b2b2b] rounded-sm bg-black/40 p-2 sm:p-4"
+        variants={itemVariants}
+      >
+        <p className="text-term-cyan text-xs sm:text-sm">$ ls -l /skills</p>
+        <p className="mt-1 text-term-gray text-xs">
+          Languages and tools I use:
+        </p>
+        <div className="mt-3 flex flex-wrap gap-3 sm:gap-4">
+          {skills.map((skill) => (
+            <motion.a
+              key={skill.name}
+              href={skill.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center p-2 sm:p-3 bg-[#1a1a1a] border border-[#444] rounded hover:border-term-green hover:shadow-[0_0_10px_rgba(0,255,65,0.2)] transition-all"
+              title={skill.name}
+              variants={itemVariants}
+              whileHover={{ scale: 1.1 }}
+            >
+              <img
+                src={skill.url}
+                alt={skill.name}
+                width={32}
+                height={32}
+                loading="lazy"
+                className="w-6 h-6 sm:w-8 sm:h-8"
+              />
+            </motion.a>
+          ))}
         </div>
       </motion.div>
 

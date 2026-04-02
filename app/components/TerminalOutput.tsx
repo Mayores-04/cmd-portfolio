@@ -11,6 +11,9 @@ interface TerminalOutputProps {
   executeCommand?: (cmd: string) => void;
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (value: boolean) => void;
+  onMinimize?: () => void;
+  onLayoutClick?: () => void;
+  currentLayout?: string;
 }
 
 const TerminalOutput: React.FC<TerminalOutputProps> = ({
@@ -20,10 +23,13 @@ const TerminalOutput: React.FC<TerminalOutputProps> = ({
   executeCommand,
   mobileMenuOpen,
   setMobileMenuOpen,
+  onMinimize,
+  onLayoutClick,
+  currentLayout,
 }) => {
   return (
-    // <div className="flex flex-col w-full md:w-[65%] h-[calc(100vh-220px)] md:h-[calc(100vh-100px)] bg-term-bg border border-[#333] rounded-sm overflow-hidden z-10">
-    <div className="flex flex-col w-full md:w-[65%] h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden z-10">
+    // <div className="flex flex-col w-full md:w-[80%] h-[calc(100vh-220px)] md:h-[calc(100vh-100px)] bg-term-bg border border-[#333] rounded-sm overflow-hidden z-10">
+    <div className="flex flex-col w-full  h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden z-10">
       {/* Window Chrome */}
       <div className="flex items-center justify-between bg-[#1E1E1E] px-4 py-2 border-b border-[#333] select-none">
         <div className="flex items-center gap-2">
@@ -53,6 +59,37 @@ const TerminalOutput: React.FC<TerminalOutputProps> = ({
               <Menu className="w-4 h-4" />
             )}
           </button>
+
+          {/* Desktop window control buttons (hidden on mobile) */}
+          <div className="hidden md:flex items-center gap-2 text-term-gray">
+            {/* Minimize button */}
+            <button
+              onClick={onMinimize}
+              className="flex items-center justify-center w-6 h-6 rounded hover:bg-[#444] transition-colors text-xs font-bold"
+              aria-label="Minimize"
+              title="Minimize"
+            >
+              −
+            </button>
+            {/* Maximize/Layout button */}
+            <button
+              onClick={onLayoutClick}
+              className="flex items-center justify-center w-6 h-6 rounded hover:bg-[#444] transition-colors text-xs cursor-pointer"
+              aria-label="Layout options"
+              title="Change layout"
+            >
+              □
+            </button>
+            {/* Close button (visual only on non-mobile) */}
+            <button
+              className="flex items-center justify-center w-6 h-6 rounded hover:bg-[#444] transition-colors"
+              aria-label="Close"
+              title="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
           {/* Desktop: empty space for window controls */}
           <div className="hidden md:flex items-center gap-4 text-[#888]">
             {/* ...window controls... */}

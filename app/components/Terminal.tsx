@@ -6,6 +6,10 @@ import TerminalOutput from "./TerminalOutput";
 import NavigationButtons from "./NavigationButtons";
 import HelpPanel from "./HelpPanel";
 import FirstTimeGuide from "./FirstTimeGuide";
+import DesktopLayout from "./DesktopLayout";
+import MobileLayout from "./MobileLayout";
+import LayoutSwitcher from "./LayoutSwitcher";
+import FloatingRestoreButtons from "./FloatingRestoreButtons";
 import {
   getPathForCommand,
   getTerminalOutputType,
@@ -19,14 +23,24 @@ interface HistoryItem {
 }
 
 export default function Terminal() {
+  const [layoutSource, setLayoutSource] = useState<"input" | "output">("input");
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [input, setInput] = useState("");
   const [path, setPath] = useState("~");
   const [isBooting, setIsBooting] = useState(true);
   const [currentOutput, setCurrentOutput] = useState<React.ReactNode>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [inputMinimized, setInputMinimized] = useState(false);
+  const [outputMinimized, setOutputMinimized] = useState(false);
+  const [inputWidth, setInputWidth] = useState(25); // Default 25% for input terminal
+  const [isResizing, setIsResizing] = useState(false);
+  const [layout, setLayout] = useState<
+    "input-left" | "input-right" | "input-full" | "output-full"
+  >("input-left");
+  const [showLayoutMenu, setShowLayoutMenu] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom of left terminal
   useEffect(() => {
@@ -34,6 +48,37 @@ export default function Terminal() {
       behavior: "smooth",
     });
   }, [history, isBooting]);
+
+  // Resize handler for dragging divider
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing || !containerRef.current) return;
+
+      const container = containerRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const newWidth =
+        ((e.clientX - containerRect.left) / containerRect.width) * 100;
+
+      // Minimum 25% for input, maximum 50%
+      if (newWidth >= 25 && newWidth <= 50) {
+        setInputWidth(newWidth);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    if (isResizing) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isResizing]);
 
   // Keep input focused (desktop only)
   useEffect(() => {
@@ -188,30 +233,98 @@ export default function Terminal() {
       {/* Help Panel */}
       <HelpPanel />
 
-      {/* Main Content Area */}
-      <div className="flex flex-col md:flex-row flex-1 gap-1 p-1 overflow-hidden">
-        <TerminalNav
-          isBooting={isBooting}
-          history={history}
-          executeCommand={executeCommand}
-          isCmdActive={isCmdActive}
-          input={input}
-          setInput={setInput}
-          inputRef={inputRef}
-          handleKeyDown={handleKeyDown}
-          bottomRef={bottomRef}
-          mobileMenuOpen={mobileMenuOpen}
-          setMobileMenuOpen={setMobileMenuOpen}
-        />
-        <TerminalOutput
-          isBooting={isBooting}
-          currentOutput={currentOutput}
-          path={path}
-          executeCommand={executeCommand}
-          mobileMenuOpen={mobileMenuOpen}
-          setMobileMenuOpen={setMobileMenuOpen}
-        />
-      </div>
+      {/* Desktop Layout */}
+      <DesktopLayout
+        layout={layout}
+        isBooting={isBooting}
+        history={history}
+        executeCommand={executeCommand}
+        isCmdActive={isCmdActive}
+        input={input}
+        setInput={setInput}
+        inputRef={inputRef}
+        handleKeyDown={handleKeyDown}
+        currentOutput={currentOutput}
+        path={path}
+        inputMinimized={inputMinimized}
+        outputMinimized={outputMinimized}
+        inputWidth={inputWidth}
+        setInputWidth={setInputWidth}
+        setInputMinimized={setInputMinimized}
+        setOutputMinimized={setOutputMinimized}
+        onInputLayoutClick={() => {
+          setLayoutSource("input");
+          setShowLayoutMenu(true);
+        }}
+        onOutputLayoutClick={() => {
+          setLayoutSource("output");
+          setShowLayoutMenu(true);
+        }}
+        bottomRef={bottomRef}
+      />
+
+      {/* Mobile Layout */}
+      <MobileLayout
+        isBooting={isBooting}
+        history={history}
+        executeCommand={executeCommand}
+        isCmdActive={isCmdActive}
+        input={input}
+        setInput={setInput}
+        inputRef={inputRef}
+        handleKeyDown={handleKeyDown}
+        currentOutput={currentOutput}
+        path={path}
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+        onLayoutClick={() => setShowLayoutMenu(true)}
+        bottomRef={bottomRef}
+      />
+
+      {/* Layout Switcher Modal */}
+      <LayoutSwitcher
+        isOpen={showLayoutMenu}
+        onClose={() => setShowLayoutMenu(false)}
+        currentLayout={layout}
+        activeTerminal={layoutSource}
+        fullLayoutTarget={layoutSource}
+        onLayoutSelect={(newLayout) => {
+          const resolvedLayout =
+            newLayout === "input-full" || newLayout === "output-full"
+              ? layoutSource === "output"
+                ? "output-full"
+                : "input-full"
+              : newLayout;
+
+          setLayout(resolvedLayout);
+
+          if (resolvedLayout === "input-full") {
+            setInputMinimized(false);
+            setOutputMinimized(true);
+          } else if (resolvedLayout === "output-full") {
+            setInputMinimized(true);
+            setOutputMinimized(false);
+          } else {
+            // Split layouts should always restore both terminals.
+            setInputMinimized(false);
+            setOutputMinimized(false);
+          }
+        }}
+      />
+
+      {/* Floating Restore Buttons */}
+      <FloatingRestoreButtons
+        inputMinimized={inputMinimized}
+        outputMinimized={outputMinimized}
+        onRestoreInput={() => {
+          setInputMinimized(false);
+          setLayout("input-left");
+        }}
+        onRestoreOutput={() => {
+          setOutputMinimized(false);
+          setLayout("input-left");
+        }}
+      />
 
       {/* First Time Guide */}
       <FirstTimeGuide executeCommand={executeCommand} />
