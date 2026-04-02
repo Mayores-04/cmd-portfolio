@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  FaGithub,
-  FaLinkedin,
-  FaTwitter,
-  FaFacebook,
-  FaInstagram,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import { motion } from "framer-motion";
 
@@ -24,12 +18,6 @@ const SocialsPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
       url: "https://www.linkedin.com/in/jake-mayores-81677530a/",
       display: "linkedin.com/in/jake-mayores-81677530a",
       icon: FaLinkedin,
-    },
-    {
-      name: "Twitter",
-      url: "https://twitter.com/your-profile",
-      display: "twitter.com/your-profile",
-      icon: FaTwitter,
     },
     {
       name: "Facebook",
