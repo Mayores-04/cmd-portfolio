@@ -92,7 +92,7 @@ const FirstTimeGuide: React.FC<FirstTimeGuideProps> = ({ executeCommand }) => {
                   <code className="bg-[#1a1a1a] px-1 rounded">2</code>{" "}
                   (projects),{" "}
                   <code className="bg-[#1a1a1a] px-1 rounded">3</code>{" "}
-                  (contact),{" "}
+                  (contact),{" "}  
                   <code className="bg-[#1a1a1a] px-1 rounded">help</code>
                 </p>
               </div>

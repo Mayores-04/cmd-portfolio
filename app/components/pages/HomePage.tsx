@@ -11,7 +11,6 @@ const quickCommands = [
   "cd .. | cd ~ | cd / | cd   # Return to home",
   "ls | ls -l                 # List all available pages",
   "0 | home | menu | help     # Return to home/help screen",
-  "sudo                       # Demo command (shows Permission Denied)",
 ];
 
 const skills = [
