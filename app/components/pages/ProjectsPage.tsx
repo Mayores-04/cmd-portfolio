@@ -1,78 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-
-type Project = {
-  permissions: string;
-  size: string;
-  date: string;
-  name: string;
-  url: string;
-  image: string;
-  tech: string;
-  description: string;
-};
-
-const getPreviewImage = (project: Project) =>
-  project.image ||
-  `https://image.thum.io/get/width/800/noanimate/${project.url}`;
-
-const projects: Project[] = [
-  {
-    permissions: "-rw-r--r--",
-    size: "2.0M",
-    date: "Apr 01",
-    name: "Portfolio",
-    url: "https://jake-mayores-portfolio.vercel.app",
-    image: "/images/portfolio1.png",
-    tech: "Next.js, TypeScript, Tailwind CSS, Node.js",
-    description:
-      "Terminal-inspired personal portfolio with interactive command navigation and animated UI.",
-  },
-  {
-    permissions: "-rw-r--r--",
-    size: "1.9M",
-    date: "Mar 02",
-    name: "Portfolio",
-    url: "https://jakemayores.vercel.app",
-    image: "/images/Portfolio2.PNG",
-    tech: "Next.js, TypeScript, Tailwind CSS, Node.js",
-    description:
-      "Modern personal showcase website featuring projects, skills, and contact pages.",
-  },
-  {
-    permissions: "-rw-r--r--",
-    size: "1.2M",
-    date: "Feb 18",
-    name: "EmailSender",
-    url: "https://jm-email-sender.vercel.app",
-    image: "/images/EmailSender.png",
-    tech: "React, Node.js, EmailJS",
-    description:
-      "Email utility app for composing and sending messages with a clean and simple interface.",
-  },
-  {
-    permissions: "-rw-r--r--",
-    size: "2.7M",
-    date: "Jan 06",
-    name: "GoCarExpress",
-    url: "https://go-car-express.vercel.app",
-    image: "/images/GoCarExpress.png",
-    tech: "Next.js, Tailwind CSS, TypeScript, Express.js, MongoDB",
-    description:
-      "Admin-focused car service platform with backend-driven workflows for managing bookings, service status, customer records, and operational updates.",
-  },
-  {
-    permissions: "-rw-r--r--",
-    size: "890K",
-    date: "Sep 27",
-    name: "MovieMunch",
-    url: "https://github.com/Mayores-04/Movie_reservation",
-    image: "/images/MovieMunch.PNG",
-    tech: "C#, MongoDB, Figma, Bunifu UI, Guna UI",
-    description:
-      "The MovieMunch System is an innovative desktop application designed to enhance the cinema experience. Book movie tickets and pre-order snacks. This is a fully functional application.",
-  },
-];
+import {
+  getPreviewImage,
+  projectsData,
+  type Project,
+} from "@/data/projectsData";
 
 const ProjectsPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
   executeCommand,
@@ -101,7 +33,7 @@ const ProjectsPage: React.FC<{ executeCommand?: (cmd: string) => void }> = ({
 
   const hidePreview = () => setActivePreview(null);
   const renderedProjects = Array.from(
-    new Map(projects.map((project) => [project.url, project])).values(),
+    new Map(projectsData.map((project) => [project.url, project])).values(),
   );
 
   useEffect(() => {

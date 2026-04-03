@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { navigationItems, navigationPathMap } from "@/data/navigationData";
 
 interface NavigationButtonsProps {
   currentPath: string;
@@ -9,30 +10,13 @@ interface NavigationButtonsProps {
   isBooting: boolean;
 }
 
-const navItems = [
-  { label: "Home", command: "home", icon: "🏠" },
-  { label: "About", command: "about", icon: "👤" },
-  { label: "Projects", command: "projects", icon: "💼" },
-  { label: "Contact", command: "contact", icon: "✉️" },
-  { label: "Socials", command: "socials", icon: "🔗" },
-  { label: "Resume", command: "resume", icon: "📄" },
-];
-
 const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   currentPath,
   executeCommand,
   isBooting,
 }) => {
   const getPathForCommand = (cmd: string): string => {
-    const pathMap: { [key: string]: string } = {
-      home: "~",
-      about: "~/about",
-      projects: "~/projects",
-      contact: "~/contact",
-      socials: "~/socials",
-      resume: "~/resume",
-    };
-    return pathMap[cmd] || "~";
+    return navigationPathMap[cmd] || "~";
   };
 
   const isActive = (cmd: string) => {
@@ -71,7 +55,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
       <div className="flex flex-wrap gap-2 justify-start items-center">
         <span className="text-term-gray text-xs mr-2">Navigation:</span>
         <div className="flex flex-wrap gap-2">
-          {navItems.map((item) => (
+          {navigationItems.map((item) => (
             <motion.button
               key={item.command}
               variants={buttonVariants}

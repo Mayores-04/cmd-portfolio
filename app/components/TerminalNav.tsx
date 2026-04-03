@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 import ClickableCmd from "./shared/ClickableCmd";
 import TerminalPrompt from "./TerminalPrompt";
+import { terminalMenuItems } from "@/data/navigationData";
 
 interface TerminalNavProps {
   isBooting: boolean;
@@ -161,14 +162,7 @@ const TerminalNav: React.FC<TerminalNavProps> = ({
               <span className="text-term-sm">ls -l</span>
             </div>
 
-            {[
-              { key: "0", label: "home", desc: "Home page" },
-              { key: "1", label: "about", desc: "profile and values" },
-              { key: "2", label: "projects", desc: "work and stack" },
-              { key: "3", label: "contact", desc: "reach me directly" },
-              { key: "4", label: "socials", desc: "social accounts" },
-              { key: "5", label: "resume", desc: "download and summary" },
-            ].map((item) => (
+            {terminalMenuItems.map((item) => (
               <div
                 className="flex gap-3 items-baseline text-sm cursor-pointer"
                 key={item.key}

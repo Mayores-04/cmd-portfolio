@@ -3,6 +3,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
+import {
+  breadcrumbCommandMap,
+  breadcrumbLabelMap,
+} from "@/data/navigationData";
 
 interface BreadcrumbNavProps {
   currentPath: string;
@@ -13,24 +17,6 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({
   currentPath,
   executeCommand,
 }) => {
-  const pathMap: { [key: string]: string } = {
-    "~": "Home",
-    "~/about": "About",
-    "~/projects": "Projects",
-    "~/contact": "Contact",
-    "~/socials": "Socials",
-    "~/resume": "Resume",
-  };
-
-  const commandMap: { [key: string]: string } = {
-    "~": "home",
-    "~/about": "about",
-    "~/projects": "projects",
-    "~/contact": "contact",
-    "~/socials": "socials",
-    "~/resume": "resume",
-  };
-
   const getBreadcrumbs = () => {
     const pathParts = currentPath === "~" ? ["~"] : ["~", currentPath];
     return pathParts;
@@ -64,7 +50,7 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({
         <React.Fragment key={path}>
           <motion.button
             variants={itemVariants}
-            onClick={() => executeCommand(commandMap[path] || "home")}
+            onClick={() => executeCommand(breadcrumbCommandMap[path] || "home")}
             className={`px-2 py-1 rounded transition-colors ${
               path === currentPath
                 ? "text-term-green font-bold cursor-default"
@@ -72,7 +58,7 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({
             }`}
             aria-current={path === currentPath ? "page" : undefined}
           >
-            {pathMap[path] || path}
+            {breadcrumbLabelMap[path] || path}
           </motion.button>
           {index < breadcrumbs.length - 1 && (
             <motion.span variants={itemVariants}>

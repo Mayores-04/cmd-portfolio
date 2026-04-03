@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { terminalMenuItems } from "@/data/navigationData";
 
 const ListingPage = () => {
   const containerVariants = {
@@ -29,14 +30,7 @@ const ListingPage = () => {
       initial="hidden"
       animate="show"
     >
-      {[
-        { key: "0", label: "home", desc: "Home page" },
-        { key: "1", label: "about", desc: "profile and values" },
-        { key: "2", label: "projects", desc: "work and stack" },
-        { key: "3", label: "contact", desc: "reach me directly" },
-        { key: "4", label: "socials", desc: "social accounts" },
-        { key: "5", label: "resume", desc: "download and summary" },
-      ].map((item) => (
+      {terminalMenuItems.map((item) => (
         <motion.p key={item.key} variants={itemVariants}>
           <span className="text-term-yellow">[{item.key}]</span>{" "}
           <span className="text-term-cyan">{item.label}</span>{" "}

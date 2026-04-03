@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import ListingPage from "../pages/ListingPage";
 import AboutPage from "../pages/AboutPage";
 import ProjectsPage from "../pages/ProjectsPage";
+import JourneyPage from "../pages/JourneyPage";
 import ContactPage from "../pages/ContactPage";
 import SocialsPage from "../pages/SocialsPage";
 import ResumePage from "../pages/ResumePage";
@@ -21,6 +22,8 @@ export function generateOutput(
       return <AboutPage executeCommand={executeCommand} />;
     case "projects":
       return <ProjectsPage executeCommand={executeCommand} />;
+    case "journey":
+      return <JourneyPage executeCommand={executeCommand} />;
     case "contact":
       return <ContactPage executeCommand={executeCommand} />;
     case "socials":

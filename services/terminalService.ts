@@ -2,6 +2,7 @@ const pathByType = {
   home: "~",
   about: "~/about",
   projects: "~/projects",
+  journey: "~/journey",
   contact: "~/contact",
   socials: "~/socials",
   resume: "~/resume",
@@ -11,6 +12,7 @@ const typeByDirectory = {
   home: "home",
   about: "about",
   projects: "projects",
+  journey: "journey",
   contact: "contact",
   socials: "socials",
   resume: "resume",
@@ -83,7 +85,12 @@ function resolveCommandType(
     case "cat socials.txt":
       return "socials";
     case "5":
+    case "resume":
       return "resume";
+    case "6":
+    case "journey":
+    case "cat journey.md":
+      return "journey";
     case "sudo":
       return "sudo";
     case "":
@@ -108,6 +115,7 @@ export type TerminalOutputType =
   | "listing"
   | "about"
   | "projects"
+  | "journey"
   | "contact"
   | "socials"
   | "resume"
