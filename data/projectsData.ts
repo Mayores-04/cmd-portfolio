@@ -43,17 +43,17 @@ export const projectsData: Project[] = [
     description:
       "Email utility app for composing and sending messages with a clean and simple interface.",
   },
-  {
-    permissions: "-rw-r--r--",
-    size: "2.7M",
-    date: "Jan 06",
-    name: "GoCarExpress",
-    url: "https://go-car-express.vercel.app",
-    image: "/projects/GoCarExpress.png",
-    tech: "Next.js, Tailwind CSS, TypeScript, Express.js, MongoDB",
-    description:
-      "Admin-focused car service platform with backend-driven workflows for managing bookings, service status, customer records, and operational updates.",
-  },
+  // {
+  //   permissions: "-rw-r--r--",
+  //   size: "2.7M",
+  //   date: "Jan 06",
+  //   name: "GoCarExpress",
+  //   url: "https://go-car-express.vercel.app",
+  //   image: "/projects/GoCarExpress.png",
+  //   tech: "TypeScript, Express.js, MongoDB",
+  //   description:
+  //     "I worked on the admin system and backend for this car service platform, handling workflows for managing bookings, service status, customer records, and operational updates. I was not responsible for the frontend build.",
+  // },
   {
     permissions: "-rw-r--r--",
     size: "890K",

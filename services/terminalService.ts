@@ -1,3 +1,5 @@
+import { terminalCommandTypeMap } from "@/data/navigationData";
+
 const pathByType = {
   home: "~",
   about: "~/about",
@@ -63,41 +65,20 @@ function resolveCommandType(
     return cdType;
   }
 
-  switch (cmd) {
-    case "help":
-    case "home":
-    case "menu":
-    case "0":
-      return "home";
-    case "ls":
-    case "ls -l":
-      return "listing";
-    case "1":
-    case "cat about.md":
-      return "about";
-    case "2":
-    case "ls projects/":
-      return "projects";
-    case "3":
-    case "cat contact.txt":
-      return "contact";
-    case "4":
-    case "cat socials.txt":
-      return "socials";
-    case "5":
-    case "resume":
-      return "resume";
-    case "6":
-    case "journey":
-    case "cat journey.md":
-      return "journey";
-    case "sudo":
-      return "sudo";
-    case "":
-      return "none";
-    default:
-      return "notfound";
+  if (cmd === "sudo") {
+    return "sudo";
   }
+
+  if (cmd === "") {
+    return "none";
+  }
+
+  const mappedType = terminalCommandTypeMap[cmd];
+  if (mappedType) {
+    return mappedType as TerminalOutputType;
+  }
+
+  return "notfound";
 }
 
 export function getPathForCommand(cmd: string, currentPath: string): string {
