@@ -32,7 +32,7 @@ const TerminalOutput: React.FC<TerminalOutputProps> = ({
     <div className="flex flex-col w-full  h-full bg-term-bg border border-[#333] rounded-sm overflow-hidden z-10">
       {/* Window Chrome */}
       <div className="flex items-center justify-between bg-[#1E1E1E] px-4 py-2 border-b border-[#333] select-none">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 min-w-0">
           <img
             src="https://git-scm.com/favicon.ico"
             alt="Git"
@@ -42,6 +42,9 @@ const TerminalOutput: React.FC<TerminalOutputProps> = ({
           <span className="text-term-text text-xs sm:text-sm truncate">
             jake_portfolio MINGW64:/~jake/output
             {path !== "~" ? path.replace("~", "") : ""}
+          </span>
+          <span className="hidden lg:inline-flex items-center rounded-full border border-term-yellow/30 bg-term-yellow/10 px-2 py-0.5 text-[10px] font-medium text-term-yellow whitespace-nowrap">
+            Portfolio still in progress
           </span>
         </div>
         <div className="flex items-center gap-4">
